@@ -1,0 +1,38 @@
+ALGORITHM SentenceAnalyzer
+VAR
+    ch : CHARACTER;
+    length, words, vowels : INTEGER;
+BEGIN
+    length := 0;
+    words := 0;
+    vowels := 0;
+
+    Write("Enter a sentence ending with a point:");
+    Read(ch);
+
+    WHILE (ch <> '.') DO
+        length := length + 1;
+
+        // Count vowels (case-insensitive)
+        IF (ch = 'a' OR ch = 'e' OR ch = 'i' OR ch = 'o' OR ch = 'u' OR 
+            ch = 'A' OR ch = 'E' OR ch = 'I' OR ch = 'O' OR ch = 'U') THEN
+            vowels := vowels + 1;
+        END_IF
+
+        // Count spaces to determine words
+        IF (ch = ' ') THEN
+            words := words + 1;
+        END_IF
+
+        Read(ch);
+    END_WHILE;
+
+    // Add 1 to words if the sentence is not empty (words = spaces + 1)
+    IF (length > 0) THEN
+        words := words + 1;
+    END_IF
+
+    Write("Length: ", length);
+    Write("Words: ", words);
+    Write("Vowels: ", vowels);
+END.
