@@ -1,0 +1,122 @@
+ Data Structures 
+
+problem 1
+
+def find_distinct_sum(set1, set2):
+    total_sum = 0
+    
+    # 1. Compare each element of set 1 with set 2; if not present, add to sum
+    for i in range(len(set1)):
+        is_present = False
+        for j in range(len(set2)):
+            if set1[i] == set2[j]:
+                is_present = True
+                break
+        if not is_present:
+            total_sum += set1[i]
+            
+    # 2. Do the vice versa for elements in set 2 compared with set 1
+    for i in range(len(set2)):
+        is_present = False
+        for j in range(len(set1)):
+            if set2[i] == set1[j]:
+                is_present = True
+                break
+        if not is_present:
+            total_sum += set2[i]
+            
+    return total_sum
+
+# Example Usage:
+set1 = [3, 1, 7, 9]
+set2 = [2, 4, 1, 9, 3]
+
+result = find_distinct_sum(set1, set2)
+print(f"Output: {result}")
+
+problem 2
+
+# ==========================================
+# PROBLEM 1: Sum of Distinct Elements
+# ==========================================
+def find_distinct_sum(set1, set2):
+    total_sum = 0
+    
+    # 1. Compare each element of set 1 with set 2
+    for i in range(len(set1)):
+        is_present = False
+        for j in range(len(set2)):
+            if set1[i] == set2[j]:
+                is_present = True
+                break
+        if not is_present:
+            total_sum += set1[i]
+            
+    # 2. Vice versa: compare each element of set 2 with set 1
+    for i in range(len(set2)):
+        is_present = False
+        for j in range(len(set1)):
+            if set2[i] == set1[j]:
+                is_present = True
+                break
+        if not is_present:
+            total_sum += set2[i]
+            
+    return total_sum
+
+
+# ==========================================
+# PROBLEM 2: Dot Product & Orthogonality Check
+# ==========================================
+
+# Procedure approach (passing reference via a list container)
+def dot_product_proc(v1, v2, size, ps_ref):
+    ps_ref[0] = 0
+    for i in range(size):
+        ps_ref[0] += v1[i] * v2[i]
+
+def check_orthogonality_procedure(pairs_v1, pairs_v2, n, size):
+    print("--- Orthogonality Check (Using Procedure) ---")
+    for i in range(n):
+        ps = [0]
+        dot_product_proc(pairs_v1[i], pairs_v2[i], size, ps)
+        if ps[0] == 0:
+            print(f"Pair {i+1}: Orthogonal (ps = 0)")
+        else:
+            print(f"Pair {i+1}: Not orthogonal (ps = {ps[0]})")
+
+# Function approach
+def dot_product_func(v1, v2, size):
+    ps = 0
+    for i in range(size):
+        ps += v1[i] * v2[i]
+    return ps
+
+def check_orthogonality_function(pairs_v1, pairs_v2, n, size):
+    print("\n--- Orthogonality Check (Using Function) ---")
+    for i in range(n):
+        ps = dot_product_func(pairs_v1[i], pairs_v2[i], size)
+        if ps == 0:
+            print(f"Pair {i+1}: Orthogonal (ps = 0)")
+        else:
+            print(f"Pair {i+1}: Not orthogonal (ps = {ps})")
+
+
+# ==========================================
+# EXECUTION & TESTING
+# ==========================================
+if __name__ == "__main__":
+    # Test Problem 1
+    set1 = [3, 1, 7, 9]
+    set2 = [2, 4, 1, 9, 3]
+    print(f"Problem 1 Output: {find_distinct_sum(set1, set2)}")
+    print("=" * 45)
+
+    # Test Problem 2
+    n_pairs = 2
+    vector_size = 3
+    v1_list = [[1, 0, 0], [1, 2, 3]]
+    v2_list = [[0, 1, 0], [-2, 1, 0]]
+
+    check_orthogonality_procedure(v1_list, v2_list, n_pairs, vector_size)
+    check_orthogonality_function(v1_list, v2_list, n_pairs, vector_size)
