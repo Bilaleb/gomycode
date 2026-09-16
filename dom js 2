@@ -1,0 +1,160 @@
+html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Changer</title>
+  <!-- Link to external CSS file -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Main container: centers content horizontally, gives top margin -->
+  <div class="container">
+    <h1>Color Changer</h1>
+
+    <!-- The box whose background color will change -->
+    <div id="color-box"></div>
+
+    <!-- Button to trigger color change -->
+    <button id="change-color-btn">Change Color</button>
+  </div>
+
+  <!-- Link to external JavaScript file -->
+  <script src="script.js"></script>
+</body>
+</html>
+
+css 
+
+/* style.css — basic, clean, and centered layout */
+
+/* Reset default margins and set a pleasant font */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  background: #f5f7fa;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+}
+
+/* Container centers content horizontally and adds top spacing */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;      /* horizontal centering */
+  margin-top: 4rem;         /* top margin for breathing room */
+  text-align: center;
+}
+
+/* Heading style */
+h1 {
+  font-weight: 600;
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  color: #1e293b;
+  letter-spacing: -0.5px;
+}
+
+/* The box whose color changes */
+#color-box {
+  width: 240px;
+  height: 240px;
+  background-color: #3498db;   /* default friendly blue */
+  border-radius: 24px;
+  box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 2rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Button styling — visually appealing and clickable */
+#change-color-btn {
+  background: #1e293b;
+  color: white;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding: 0.9rem 2.2rem;
+  border-radius: 60px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+  letter-spacing: 0.5px;
+}
+
+#change-color-btn:hover {
+  background: #0f172a;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+#change-color-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Small responsive touch */
+@media (max-width: 480px) {
+  .container {
+    margin-top: 2rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  #color-box {
+    width: 180px;
+    height: 180px;
+  }
+
+  #change-color-btn {
+    font-size: 1rem;
+    padding: 0.75rem 1.8rem;
+  }
+}
+
+javascript
+
+// script.js — waits for DOM, selects elements, and changes color on click
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Select the color box and the button
+  const colorBox = document.getElementById('color-box');
+  const changeColorBtn = document.getElementById('change-color-btn');
+
+  /**
+   * Generates a random hexadecimal color code.
+   * @returns {string} A string like '#a3f2c1'
+   */
+  function getRandomColor() {
+    // Hexadecimal characters
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+
+    // Build a 6-character hex code
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+
+    return color;
+  }
+
+  // Add click event listener to the button
+  changeColorBtn.addEventListener('click', () => {
+    // Generate a random color and apply it to the box
+    const newColor = getRandomColor();
+    colorBox.style.backgroundColor = newColor;
+  });
+
+  // Optional: log a friendly message (you can remove this)
+  console.log('🎨 Color Changer ready — click the button!');
+});
