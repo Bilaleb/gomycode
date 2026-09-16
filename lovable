@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bilal Elaouab — Software Developer &amp; Designer</title>
+  <meta name="description" content="Portfolio of Bilal Elaouab, a software developer &amp; designer building thoughtful, end-to-end digital products — from earliest idea to polished, shipped interface." />
+  <meta property="og:title" content="Bilal Elaouab — Software Developer &amp; Designer" />
+  <meta property="og:description" content="Building thoughtful, end-to-end digital products — from earliest idea to polished, shipped interface." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --background: oklch(0.183 0.031 263.4);
+      --foreground: oklch(1 0 0);
+      --primary: oklch(0.809 0.096 251.8);
+      --primary-foreground: oklch(0.183 0.031 263.4);
+      --secondary: oklch(1 0 0 / 5%);
+      --accent: oklch(0.865 0.115 207.1);
+      --muted-foreground: oklch(0.711 0.035 256.8);
+      --border: oklch(1 0 0 / 10%);
+      --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+      --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: var(--background);
+      color: var(--foreground);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    main {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .backdrop {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .glow-1, .glow-2, .glow-3 { position: absolute; border-radius: 9999px; }
+    .glow-1 {
+      top: -10rem; left: -8rem;
+      height: 46rem; width: 46rem;
+      background: var(--primary);
+      opacity: 0.25;
+      filter: blur(120px);
+      animation: drift 16s ease-in-out infinite;
+    }
+    .glow-2 {
+      top: 33%; right: -10rem;
+      height: 42rem; width: 42rem;
+      background: var(--accent);
+      opacity: 0.2;
+      filter: blur(130px);
+      animation: drift 20s ease-in-out infinite reverse;
+    }
+    .glow-3 {
+      bottom: -10rem; left: 33%;
+      height: 34rem; width: 34rem;
+      background: oklch(0.585 0.204 277.1);
+      opacity: 0.1;
+      filter: blur(120px);
+    }
+    .dots {
+      position: absolute; inset: 0;
+      opacity: 0.14;
+      background-image: radial-gradient(rgba(255,255,255,0.5) 1px, transparent 1px);
+      background-size: 26px 26px;
+    }
+    .shade {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(11,18,32,0.2), rgba(11,18,32,0.85));
+    }
+
+    section {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 1.25rem;
+    }
+    @media (min-width: 640px) { section { padding: 0 2rem; } }
+
+    .wrap { margin: 0 auto; width: 100%; max-width: 72rem; }
+
+    .panel {
+      position: relative;
+      width: 100%;
+      border-radius: 28px;
+      padding: 1.75rem;
+      background-color: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      box-shadow: 0 24px 60px -28px rgba(3, 10, 24, 0.85);
+    }
+    @media (min-width: 640px) { .panel { padding: 3rem; } }
+    @media (min-width: 1024px) { .panel { padding: 4rem; } }
+
+    .sheen {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+      pointer-events: none;
+    }
+
+    .badge-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-radius: 9999px;
+      border: 1px solid var(--border);
+      background: var(--secondary);
+      padding: 0.25rem 0.75rem;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.8);
+    }
+    .badge .dot {
+      width: 6px; height: 6px;
+      border-radius: 9999px;
+      background: var(--accent);
+    }
+    .badge-note {
+      display: none;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--muted-foreground);
+    }
+    @media (min-width: 640px) { .badge-note { display: inline; } }
+
+    h1 {
+      margin-top: 1.75rem;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 2.25rem;
+      line-height: 1;
+      letter-spacing: -0.025em;
+      max-width: 20ch;
+    }
+    @media (min-width: 640px) { h1 { font-size: 3.75rem; } }
+    @media (min-width: 1024px) { h1 { font-size: 4.5rem; } }
+
+    .subtitle {
+      margin-top: 1.25rem;
+      max-width: 48ch;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.7);
+      text-wrap: pretty;
+    }
+    @media (min-width: 640px) { .subtitle { font-size: 1.125rem; } }
+
+    .cta-row {
+      margin-top: 2.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+    }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-radius: 9999px;
+      background: var(--primary);
+      color: var(--primary-foreground);
+      padding: 0.75rem 1.5rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: inset 0 0 0 1px oklch(0.809 0.096 251.8 / 60%);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .cta:hover {
+      transform: translateY(-2px);
+      box-shadow: inset 0 0 0 1px oklch(0.865 0.115 207.1 / 70%);
+    }
+    .cta .arrow { transition: transform 0.2s ease; }
+    .cta:hover .arrow { transform: translateX(2px); }
+    .location {
+      font-size: 0.875rem;
+      color: var(--muted-foreground);
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .rise { opacity: 0; animation: rise 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+    .d1 { animation-delay: 0.05s; }
+    .d2 { animation-delay: 0.16s; }
+    .d3 { animation-delay: 0.27s; }
+    .d4 { animation-delay: 0.38s; }
+
+    @keyframes drift {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(24px, -18px) scale(1.08); }
+      100% { transform: translate(0, 0) scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="backdrop" aria-hidden="true">
+      <div class="glow-1"></div>
+      <div class="glow-2"></div>
+      <div class="glow-3"></div>
+      <div class="dots"></div>
+      <div class="shade"></div>
+    </div>
+
+    <section>
+      <div class="wrap">
+        <div class="panel">
+          <div class="sheen"></div>
+
+          <div class="badge-row rise d1">
+            <span class="badge"><span class="dot"></span>Available for work</span>
+            <span class="badge-note">Portfolio &middot; 2026</span>
+          </div>
+
+          <h1 class="rise d2">Bilal Elaouab</h1>
+
+          <p class="subtitle rise d3">
+            Software developer &amp; designer building thoughtful, end-to-end
+            digital products &mdash; from earliest idea to polished, shipped
+            interface.
+          </p>
+
+          <div class="cta-row rise d4">
+            <a href="#projects" class="cta">
+              View My Projects <span class="arrow" aria-hidden="true">&rarr;</span>
+            </a>
+            <span class="location">Based in Casablanca &middot; working worldwide</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
