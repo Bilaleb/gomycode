@@ -1,0 +1,66 @@
+document.addEventListener("DOMContentLoaded", () => {
+  // Select the total price element
+  const totalElement = document.querySelector(".total");
+  // Select all individual product wrappers
+  const products = document.querySelectorAll(".list-products > .card-body");
+
+  // Function to calculate and update the total price
+  const updateTotal = () => {
+    let sum = 0;
+    // Re-select products to account for any deletions
+    const currentProducts = document.querySelectorAll(".list-products > .card-body"); 
+    
+    currentProducts.forEach(product => {
+      const priceText = product.querySelector(".unit-price").textContent;
+      const quantityText = product.querySelector(".quantity").textContent;
+      
+      // Extract numbers from text
+      const price = parseInt(priceText.replace(" $", ""));
+      const quantity = parseInt(quantityText);
+      
+      sum += price * quantity;
+    });
+    
+    totalElement.textContent = `${sum} $`;
+  };
+
+  // Attach event listeners to each product
+  products.forEach(product => {
+    const plusBtn = product.querySelector(".fa-plus-circle");
+    const minusBtn = product.querySelector(".fa-minus-circle");
+    const quantitySpan = product.querySelector(".quantity");
+    const deleteBtn = product.querySelector(".fa-trash-alt");
+    const heartBtn = product.querySelector(".fa-heart");
+
+    // 1. Adjust quantity through "+" button
+    plusBtn.addEventListener("click", () => {
+      let quantity = parseInt(quantitySpan.textContent);
+      quantitySpan.textContent = quantity + 1;
+      updateTotal();
+    });
+
+    // 2. Adjust quantity through "-" button
+    minusBtn.addEventListener("click", () => {
+      let quantity = parseInt(quantitySpan.textContent);
+      if (quantity > 0) {
+        quantitySpan.textContent = quantity - 1;
+        updateTotal();
+      }
+    });
+
+    // 3. Delete items from the cart
+    deleteBtn.addEventListener("click", () => {
+      product.remove(); // Removes the entire product card from the DOM
+      updateTotal();
+    });
+
+    // 4. Like items (change heart color)
+    heartBtn.addEventListener("click", () => {
+      if (heartBtn.style.color === "red") {
+        heartBtn.style.color = "black";
+      } else {
+        heartBtn.style.color = "red";
+      }
+    });
+  });
+});
