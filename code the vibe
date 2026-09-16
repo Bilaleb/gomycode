@@ -1,0 +1,426 @@
+html 
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3‑card product gallery · theme & fade‑in</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-header">
+    <h1>✨ Featured products</h1>
+    <button class="theme-toggle" id="themeToggle" aria-label="Switch between light and dark theme">
+      <span class="theme-icon" id="themeIcon">☀️</span>
+      <span id="themeText">Light</span>
+    </button>
+  </div>
+
+  <div class="gallery">
+    <!-- CARD 1 -->
+    <article class="card">
+      <div class="card-img">
+        <img src="https://picsum.photos/id/101/400/400" alt="Minimalist ceramic mug" loading="lazy">
+      </div>
+      <div class="card-content">
+        <h2 class="card-title">Ceramic Mug</h2>
+        <p class="card-description">Handcrafted matte finish, perfect for your morning coffee or tea.</p>
+        <div class="card-footer">
+          <span class="price">$24</span>
+          <div class="rating">★★★★★ <span>(42)</span></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- CARD 2 -->
+    <article class="card">
+      <div class="card-img">
+        <img src="https://picsum.photos/id/106/400/400" alt="Wireless headphones" loading="lazy">
+      </div>
+      <div class="card-content">
+        <h2 class="card-title">Aura Headphones</h2>
+        <p class="card-description">Active noise cancelling, 40h battery, and ultra‑soft earcups.</p>
+        <div class="card-footer">
+          <span class="price">$189</span>
+          <div class="rating">★★★★☆ <span>(128)</span></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- CARD 3 -->
+    <article class="card">
+      <div class="card-img">
+        <img src="https://picsum.photos/id/20/400/400" alt="Leather notebook" loading="lazy">
+      </div>
+      <div class="card-content">
+        <h2 class="card-title">Vintage Journal</h2>
+        <p class="card-description">Full‑grain leather cover with 240 pages of fountain‑pen friendly paper.</p>
+        <div class="card-footer">
+          <span class="price">$36</span>
+          <div class="rating">★★★★★ <span>(91)</span></div>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+  css 
+
+  /* styles.css */
+
+/* ---------- GLOBAL RESET & BASE ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ----- CSS variables (light theme default) ----- */
+:root {
+  --bg-page: #f8fafc;
+  --surface: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+  --card-hover-shadow: 0 25px 30px -12px rgba(0, 0, 0, 0.2);
+  --border-light: #e2e8f0;
+  --accent: #3b82f6;
+  --star: #fbbf24;
+  --transition-speed: 0.3s;
+  --fade-duration: 0.8s;
+}
+
+/* ----- DARK THEME OVERRIDES ----- */
+body.dark {
+  --bg-page: #0b1120;
+  --surface: #1e293b;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+  --card-hover-shadow: 0 25px 30px -12px rgba(0, 0, 0, 0.7);
+  --border-light: #334155;
+  --accent: #60a5fa;
+  --star: #facc15;
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  transition: background-color var(--transition-speed) ease,
+              color var(--transition-speed) ease;
+}
+
+/* ----- page header & toggle area ----- */
+.page-header {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.page-header h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+/* theme toggle button */
+.theme-toggle {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  color: var(--text-primary);
+  padding: 0.65rem 1.4rem;
+  border-radius: 40px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  transition: background var(--transition-speed), border-color var(--transition-speed),
+              box-shadow var(--transition-speed), transform 0.15s;
+}
+
+.theme-toggle:hover {
+  background: var(--bg-page);
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: scale(1.02);
+}
+
+.theme-toggle:active {
+  transform: scale(0.97);
+}
+
+.theme-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+/* ----- GALLERY GRID (3 cards) ----- */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ----- CARD STYLES ----- */
+.card {
+  background: var(--surface);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1),
+              box-shadow 0.3s cubic-bezier(0.2, 0, 0, 1),
+              background var(--transition-speed) ease;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-light);
+  will-change: transform;
+  /* fade-in initial state */
+  opacity: 0;
+  transform: translateY(18px);
+  animation: fadeInUp var(--fade-duration) cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+}
+
+/* staggered animation delays for a nice sequence */
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.3s; }
+.card:nth-child(3) { animation-delay: 0.5s; }
+
+/* hover effect – lift + stronger shadow */
+.card:hover {
+  transform: translateY(-10px) scale(1.01);
+  box-shadow: var(--card-hover-shadow);
+  border-color: var(--accent);
+}
+
+/* image container */
+.card-img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #cbd5e1; /* fallback */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition-speed);
+}
+
+.card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* subtle zoom on image when card is hovered */
+.card:hover .card-img img {
+  transform: scale(1.05);
+}
+
+/* card content */
+.card-content {
+  padding: 1.5rem 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  flex: 1;
+  background: var(--surface);
+  transition: background var(--transition-speed);
+}
+
+.card-title {
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.card-description {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.price {
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--star);
+  font-size: 1.1rem;
+}
+
+.rating span {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-left: 0.25rem;
+}
+
+/* ----- KEYFRAMES for fade-in + slide ----- */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ----- RESPONSIVE breakpoints ----- */
+@media (max-width: 900px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 1.5rem 1rem;
+  }
+  .page-header h1 {
+    font-size: 1.6rem;
+  }
+  .gallery {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+  .card {
+    max-width: 400px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .theme-toggle {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* reduce motion if preferred */
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .card:hover {
+    transform: none;
+  }
+  .card:hover .card-img img {
+    transform: none;
+  }
+}
+
+/* small visual trick for image placeholders */
+.card-img {
+  background: linear-gradient(145deg, #e2e8f0, #cbd5e1);
+}
+body.dark .card-img {
+  background: linear-gradient(145deg, #334155, #1e293b);
+}
+.card-img img {
+  background: transparent;
+}
+
+
+js
+
+
+
+    // script.js
+(function() {
+  // ----- DOM references -----
+  const body = document.body;
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  const themeText = document.getElementById('themeText');
+
+  // ----- helper: update UI based on theme -----
+  function setTheme(theme) {
+    if (theme === 'dark') {
+      body.classList.add('dark');
+      themeIcon.textContent = '🌙';
+      themeText.textContent = 'Dark';
+      localStorage.setItem('gallery-theme', 'dark');
+    } else {
+      body.classList.remove('dark');
+      themeIcon.textContent = '☀️';
+      themeText.textContent = 'Light';
+      localStorage.setItem('gallery-theme', 'light');
+    }
+  }
+
+  // ----- initialise theme from localStorage or system preference -----
+  function initTheme() {
+    const storedTheme = localStorage.getItem('gallery-theme');
+    if (storedTheme === 'dark') {
+      setTheme('dark');
+    } else if (storedTheme === 'light') {
+      setTheme('light');
+    } else {
+      // fallback to system preference
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(prefersDark ? 'dark' : 'light');
+    }
+  }
+
+  // ----- toggle event -----
+  themeToggle.addEventListener('click', () => {
+    const isDark = body.classList.contains('dark');
+    setTheme(isDark ? 'light' : 'dark');
+  });
+
+  // ----- optional: listen to system changes if no stored preference -----
+  // (only for better UX; if a user has manually chosen a theme we keep it)
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    const stored = localStorage.getItem('gallery-theme');
+    // only auto-update if the user hasn't set a manual preference
+    if (!stored) {
+      setTheme(e.matches ? 'dark' : 'light');
+    }
+  });
+
+  // ----- run initialisation -----
+  initTheme();
+
+  // (fade-in animations are purely CSS, no additional JS needed)
+})();
