@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>iCloud+ Plans</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, system-ui, "Segoe UI", sans-serif;
+    background: #f5f5f7;
+    margin: 0;
+    padding: 3rem 1rem;
+    color: #1d1d1f;
+  }
+
+  .plans__heading {
+    text-align: center;
+    font-size: 2.25rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.5rem;
+  }
+
+  .plans__sub {
+    text-align: center;
+    color: #6e6e73;
+    margin: 0 0 2.5rem;
+  }
+
+  .plans {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+
+  /* ---------- Card ---------- */
+  .pricing {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #e5e5ea;
+    border-radius: 18px;
+    padding: 1.75rem 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .pricing:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.10);
+  }
+
+  .pricing--featured {
+    border: 2px solid #0071e3;
+    box-shadow: 0 10px 30px rgba(0, 113, 227, 0.15);
+  }
+
+  .pricing__badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0071e3;
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .pricing__title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .pricing__price {
+    margin: 0.5rem 0 0;
+    display: flex;
+    align-items: baseline;
+    gap: 0.15rem;
+  }
+
+  .pricing__amount {
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .pricing__period {
+    color: #6e6e73;
+    font-size: 0.9rem;
+  }
+
+  .pricing__trial {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 0.5rem;
+    font-size: 0.82rem;
+    color: #0071e3;
+    font-weight: 500;
+  }
+
+  .pricing__trial::before {
+    content: "🎁";
+    font-size: 0.85rem;
+  }
+
+  .pricing__features {
+    list-style: none;
+    padding: 0;
+    margin: 1.25rem 0 1.5rem;
+    flex: 1;
+  }
+
+  .pricing__features li {
+    position: relative;
+    padding: 8px 0 8px 24px;
+    font-size: 0.92rem;
+    color: #424245;
+    border-bottom: 1px solid #f0f0f2;
+  }
+
+  .pricing__features li:last-child { border-bottom: none; }
+
+  .pricing__features li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #0071e3;
+    font-weight: 700;
+  }
+
+  .pricing__btn {
+    display: block;
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border: none;
+    border-radius: 980px;
+    background: #0071e3;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+
+  .pricing__btn:hover { background: #0077ed; }
+
+  .pricing__btn--secondary {
+    background: #f5f5f7;
+    color: #0071e3;
+    margin-top: 0.5rem;
+  }
+
+  .pricing__btn--secondary:hover { background: #e8e8ed; }
+
+  /* ---------- Redeem dialog ---------- */
+  .redeem-dialog {
+    border: none;
+    border-radius: 16px;
+    padding: 2rem;
+    width: min(400px, 92vw);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  }
+
+  .redeem-dialog::backdrop { background: rgba(0, 0, 0, 0.4); }
+
+  .redeem-dialog h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.3rem;
+  }
+
+  .redeem-dialog p { margin: 0 0 1rem; color: #6e6e73; font-size: 0.9rem; }
+
+  .redeem-dialog input {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid #d2d2d7;
+    border-radius: 10px;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .redeem-dialog .row {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+  }
+
+  .redeem-dialog button {
+    padding: 0.6rem 1.1rem;
+    border-radius: 980px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+  }
+
+  .redeem-dialog .cancel { background: #f5f5f7; color: #1d1d1f; }
+  .redeem-dialog .apply  { background: #0071e3; color: #fff; }
+
+  .redeem-msg { font-size: 0.85rem; margin-top: 0.5rem; }
+  .redeem-msg.ok  { color: #1a8f3c; }
+  .redeem-msg.err { color: #c4262e; }
+</style>
+</head>
+<body>
+
+  <h1 class="plans__heading">iCloud+</h1>
+  <p class="plans__sub">Get more storage and privacy features. Cancel anytime.</p>
+
+  <section class="plans" id="plans"></section>
+
+  <!-- Redeem code dialog -->
+  <dialog class="redeem-dialog" id="redeemDialog">
+    <h3>Redeem a code</h3>
+    <p>Enter your promotional code to activate a free month.</p>
+    <form method="dialog" id="redeemForm">
+      <input
+        type="text"
+        id="redeemInput"
+        placeholder="e.g. ICLOUD1FREE"
+        aria-label="Promotional code"
+        autocomplete="off"
+      />
+      <div class="row">
+        <button type="button" class="cancel" id="redeemCancel">Cancel</button>
+        <button type="submit" class="apply">Redeem</button>
+      </div>
+      <p class="redeem-msg" id="redeemMsg" role="status" aria-live="polite"></p>
+    </form>
+  </dialog>
+
+<script>
+  // ---------- Card factory (reusable component) ----------
+  function Card({
+    title,
+    price,
+    period = '/month',
+    features = [],
+    badge,
+    featured = false,
+    trialLabel = 'Free for 1 month',
+    ctaLabel = 'Buy',
+    secondaryLabel = 'Redeem code',
+    onSelect,
+    onRedeem,
+  }) {
+    const id = `plan-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+
+    const article = document.createElement('article');
+    article.className = 'pricing' + (featured ? ' pricing--featured' : '');
+    article.setAttribute('aria-labelledby', id);
+
+    if (badge) {
+      const b = document.createElement('span');
+      b.className = 'pricing__badge';
+      b.textContent = badge;
+      article.appendChild(b);
+    }
+
+    const header = document.createElement('header');
+
+    const h2 = document.createElement('h2');
+    h2.id = id;
+    h2.className = 'pricing__title';
+    h2.textContent = title;
+
+    const priceP = document.createElement('p');
+    priceP.className = 'pricing__price';
+
+    const [amount, rest] = String(price).split(/\s+/);
+    const amountEl = document.createElement('span');
+    amountEl.className = 'pricing__amount';
+    amountEl.textContent = amount;
+
+    const periodEl = document.createElement('span');
+    periodEl.className = 'pricing__period';
+    periodEl.textContent = rest || period;
+
+    priceP.append(amountEl, periodEl);
+
+    header.append(h2, priceP);
+
+    if (trialLabel) {
+      const trial = document.createElement('span');
+      trial.className = 'pricing__trial';
+      trial.textContent = trialLabel;
+      header.appendChild(trial);
+    }
+
+    const ul = document.createElement('ul');
+    ul.className = 'pricing__features';
+    features.forEach(f => {
+      const li = document.createElement('li');
+      li.textContent = f;
+      ul.appendChild(li);
+    });
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'pricing__btn';
+    btn.textContent = ctaLabel;
+    if (onSelect) btn.addEventListener('click', () => onSelect({ title, price }));
+
+    article.append(header, ul, btn);
+
+    if (secondaryLabel && onRedeem) {
+      const btn2 = document.createElement('button');
+      btn2.type = 'button';
+      btn2.className = 'pricing__btn pricing__btn--secondary';
+      btn2.textContent = secondaryLabel;
+      btn2.addEventListener('click', () => onRedeem({ title, price }));
+      article.appendChild(btn2);
+    }
+
+    return article;
+  }
+
+  // ---------- Data ----------
+  const plans = [
+    { title: '50 GB',  price: '$0.99 /month',  badge: '1 month free', featured: false,
+      features: ['50 GB storage', 'Private Relay', 'Hide My Email', 'Custom email domain'] },
+    { title: '200 GB', price: '$2.99 /month',  badge: 'Most Popular',  featured: true,
+      features: ['200 GB storage', 'Private Relay', 'Hide My Email', 'Custom email domain', 'HomeKit Secure Video'] },
+    { title: '2 TB',   price: '$9.99 /month',  badge: '1 month free', featured: false,
+      features: ['2 TB storage', 'Private Relay', 'Hide My Email', 'Custom email domain', 'HomeKit Secure Video'] },
+    { title: '6 TB',   price: '$29.99 /month', badge: null,           featured: false,
+      features: ['6 TB storage', 'Private Relay', 'Hide My Email', 'Custom email domain', 'HomeKit Secure Video'] },
+    { title: '12 TB',  price: '$59.99 /month', badge: null,           featured: false,
+      features: ['12 TB storage', 'Private Relay', 'Hide My Email', 'Custom email domain', 'HomeKit Secure Video'] },
+  ];
+
+  // ---------- Render ----------
+  const plansEl = document.getElementById('plans');
+  plans.forEach(p =>
+    plansEl.appendChild(
+      Card({
+        ...p,
+        onSelect: (plan) => alert(`Selected ${plan.title}`),
+        onRedeem: () => openRedeem(),
+      })
+    )
+  );
+
+  // ---------- Redeem flow ----------
+  const dialog = document.getElementById('redeemDialog');
+  const form = document.getElementById('redeemForm');
+  const input = document.getElementById('redeemInput');
+  const msg = document.getElementById('redeemMsg');
+  const cancel = document.getElementById('redeemCancel');
+
+  const VALID_CODES = { ICLOUD1FREE: '1 free month applied 🎉' };
+
+  function openRedeem() {
+    msg.textContent = '';
+    msg.className = 'redeem-msg';
+    input.value = '';
+    dialog.showModal();
+  }
+
+  cancel.addEventListener('click', () => dialog.close());
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const code = input.value.trim().toUpperCase();
+    if (!code) return;
+    if (VALID_CODES[code]) {
+      msg.textContent = VALID_CODES[code];
+      msg.className = 'redeem-msg ok';
+      setTimeout(() => dialog.close(), 900);
+    } else {
+      msg.textContent = 'That code isn’t valid. Please check and try again.';
+      msg.className = 'redeem-msg err';
+    }
+  });
+</script>
+</body>
+</html>
